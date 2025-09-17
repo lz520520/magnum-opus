@@ -36,6 +36,17 @@ fn link_vcpkg(mut path: PathBuf, name: &str) -> PathBuf {
     }
     println!("cargo:info={}", target);
     path.push("installed");
+
+    if target_os == "windows" {
+        println!(
+            "{}",
+            format!(
+                "cargo:rustc-link-search={}",
+                path.join("x64-mingw-static").join("lib").to_str().unwrap()
+            )
+        );
+    }
+    
     path.push(target);
     println!(
         "{}",
